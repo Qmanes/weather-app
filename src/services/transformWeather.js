@@ -1,8 +1,20 @@
 import convert from 'convert-units';
-import { CLOUD } from '../constants/WeatherState';
+import { CLOUD,SUN,RAIN,SNOW,THUNDER,DRIZZLE } from '../constants/WeatherState';
 
 const getWeatherState = weatherData =>{
-    return CLOUD;
+    const {id} = weatherData;
+    if(id < 300)
+        return THUNDER;
+    else if (id < 400)
+        return DRIZZLE;
+    else if (id < 600)
+        return RAIN;
+    else if (id < 700)
+        return SNOW;
+    else if (id === 800)
+        return SUN;
+    else 
+        return CLOUD;
 }
 const getTemp = kelvin => {
     return Number(convert(kelvin).from("K").to("C").toFixed(1));
@@ -10,7 +22,7 @@ const getTemp = kelvin => {
 const transformWeather = weatherData =>{
     const {humidity,temp} = weatherData.main;
     const {name} = weatherData;
-    const weatherState = getWeatherState(weatherData);
+    const weatherState = getWeatherState(weatherData.weather[0]);
     const {speed} = weatherData.wind;
     const temperature = getTemp(temp);
     return {

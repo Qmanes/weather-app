@@ -4,15 +4,16 @@ import Location from './Location';
 import WeatherData from './WeatherData';
 import './style.css';
 import transformWeather from '../../services/transformWeather'
-import {api_weather} from '../../constants/api_url';
-
+import getWeatherUrlByCity from '../../services/getWeatherUrlByCity';
+import PropTypes from 'prop-types';
 
 
 class WeatherLocation extends Component {
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
+        const {city} = props
         this.state={
-            city : null,
+            city,
             data: null,
         };
         console.log("constructor");
@@ -29,7 +30,8 @@ class WeatherLocation extends Component {
     }
  
     handleUpdateLocation = () => {
-        fetch(api_weather)
+        const url = getWeatherUrlByCity(this.state.city);
+        fetch(url)
             .then((resolve)=>{
                 return resolve.json();
             })
@@ -54,6 +56,10 @@ class WeatherLocation extends Component {
             </div>
         );
     }
+};
+
+WeatherLocation.propTypes = {
+    city : PropTypes.string.isRequired
 };
 
 export default WeatherLocation;
