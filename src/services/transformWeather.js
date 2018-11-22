@@ -17,7 +17,7 @@ const getWeatherState = weatherData =>{
         return CLOUD;
 }
 const getTemp = kelvin => {
-    return Number(convert(kelvin).from("K").to("C").toFixed(1));
+    return Number(convert(kelvin).from("K").to("C").toFixed(0));
 }
 const transformWeather = weatherData =>{
     const {humidity,temp} = weatherData.main;
