@@ -4,7 +4,7 @@ import Location from './Location';
 import WeatherData from './WeatherData';
 import './style.css';
 import transformWeather from '../../services/transformWeather'
-import getWeatherUrlByCity from '../../services/getWeatherUrlByCity';
+import {getWeatherUrlByCity} from '../../services/getWeatherUrlByCity';
 import PropTypes from 'prop-types';
 
 

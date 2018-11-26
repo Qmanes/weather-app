@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import './styleQuery.css';
 const LocalList = ({cities,onSelectedLocation}) =>  {
     const handleWeatherLocationCLick = city => {
-        console.log("handleWeatherLocationCLick");
         onSelectedLocation(city);
     }
     const strComponetns = cities => (
