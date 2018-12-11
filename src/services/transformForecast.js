@@ -1,37 +1,21 @@
-import convert from 'convert-units';
-import { CLOUD,SUN,RAIN,SNOW,THUNDER,DRIZZLE } from '../constants/WeatherState';
-const getWeatherState = weatherData =>{
-    const {id} = weatherData;
-    if(id < 300)
-        return THUNDER;
-    else if (id < 400)
-        return DRIZZLE;
-    else if (id < 600)
-        return RAIN;
-    else if (id < 700)
-        return SNOW;
-    else if (id === 800)
-        return SUN;
-    else 
-        return CLOUD;
-}
-const getTemp = kelvin => {
-    return Number(convert(kelvin).from("K").to("C").toFixed(0));
-}
-const transformForecast = weatherDataList =>{
-    return weatherDataList.map(weatherData =>{
-        const {humidity,temp} = weatherData.main;
-        const weatherState = getWeatherState(weatherData.weather[0]);
-        const {speed} = weatherData.wind;
-        const temperature = getTemp(temp);
-        return {
-            data:{
-                temperature,
-                weatherState: weatherState,
-                humidity,
-                wind: `${speed} m/s`,
-            }
-        }
-    });
-}
+
+import moment from 'moment';
+import 'moment/locale/es';
+import transformWeather from './transformWeather';
+
+const transformForecast = weatherDataList => (
+    weatherDataList.list.filter(weatherData =>(
+        moment.unix(weatherData.dt).utc().hour() === 6 ||
+        moment.unix(weatherData.dt).utc().hour() === 12 ||
+        moment.unix(weatherData.dt).utc().hour() === 18
+    )).map(weatherData =>(
+        {
+            weekDay: moment.unix(weatherData.dt).format('ddd'),
+            hour: moment.unix(weatherData.dt).hour(),
+            data: transformWeather(weatherData)
+        })
+    )
+        
+) 
+
 export default transformForecast;

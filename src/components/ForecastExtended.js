@@ -13,31 +13,43 @@ class   ForecastExtended extends Component {
         }
     }
     componentDidMount(){
-        this.handleUpdateLocation();
+        this.handleUpdateLocation(this.props.city);
     }
 
-    handleUpdateLocation = () => {
-        const url = getWeatherUrlByForecast(this.props.city);
+    componentDidUpdate(nextProps){
+        if(nextProps.city !== this.props.city) {
+            this.setState({forecastData :null});            
+            this.handleUpdateLocation(nextProps.city);
+        }
+    }
+    
+    handleUpdateLocation = (city) => {
+        const url = getWeatherUrlByForecast(city);
         fetch(url)
             .then((resolve)=>{
                 return resolve.json();
             })
-            .then((dataJson)=>{
-                this.setStateForecastData(dataJson);
+            .then((weather_data)=>{
+                this.setStateForecastData(weather_data);
             });
          
     }
 
-    setStateForecastData(dataList){
-        const {list} = dataList;
+    setStateForecastData(weather_data){
+        const forecastData = transformForecast(weather_data);
         this.setState({
-            forecastData : transformForecast(list)
+            forecastData
         });
     }
 
     renderForecastItemDays(){
         const {forecastData} = this.state;
-        return  forecastData.map( data => <ForecastItem weekDate = {"lunes"} hour = {10} data = {data.data}/>);
+        return  forecastData.map( forecast => <ForecastItem 
+                                                weekDate = {forecast.weekDay} 
+                                                hour = {forecast.hour} 
+                                                data = {forecast.data}
+                                                key = {`${forecast.weekDay}${forecast.hour}`}
+                                                />);
     }
 
     renderProgress = () =>{

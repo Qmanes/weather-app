@@ -4,8 +4,7 @@ import Paper from "@material-ui/core/Paper";
 import AppBar from "@material-ui/core/AppBar";
 import Typography from "@material-ui/core/Typography";
 import Toolbar from "@material-ui/core/Toolbar";
-
-
+import { setCity } from './actions';
 import LocationList from './components/WeatherLocation/LocationList';
 import ForecastExtended from './components/ForecastExtended';
 import './App.css';
@@ -28,7 +27,9 @@ class App extends Component {
   handleSelectionLocation = city =>{
     this.setState({
       city
-    })
+    });
+    this.props.store.dispatch(setCity(city));
+
   }
   render() {
     const {city} = this.state;

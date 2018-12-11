@@ -4,11 +4,11 @@ import './style.css';
 import WeatherData from './../WeatherLocation/WeatherData';
 
 const ForecastItem  = ({weekDate, hour,data}) =>{
-        console.log(data);
+        
         return (
             <div>
-                <div>{`${weekDate} hora: ${hour} hs`}</div>
-                <WeatherData data = {data} />
+                <h2>{`${weekDate} hora: ${hour} hs`}</h2>
+                <WeatherData data = {data.data} />
             </div>
         );
     
