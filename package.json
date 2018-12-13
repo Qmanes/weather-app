@@ -3,10 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-<<<<<<< HEAD
-=======
     "@material-ui/core": "^3.5.1",
->>>>>>> 4a7c97d4ee90704b4135238f317c2ec8a5aff83f
     "prop-types": "^15.6.2",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
